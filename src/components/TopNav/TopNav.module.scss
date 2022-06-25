@@ -3,8 +3,152 @@
 .TopNavContainer {
     background-color: $white;
     padding: 5px 20px 5px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .redditLogoImg {
-    width: 35px;
+    height: 35px;
 }
+
+.searchInput {
+    width: 600px;
+    height: 35px;
+    background-color: $gray-100;
+    border: 1px solid $gray-200;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 14px !important;
+    font-family: 'Noto Sans', sans-serif !important;
+
+    &:hover {
+        border: 1px solid $blue-700;
+        background-color: transparent;
+    }
+}
+
+// Right button section (contains log in, sign up, and profile buttons)
+.rightButtonSection {
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    align-items: center;
+}
+
+.logInButton {
+    height: 35px;
+    background-color: transparent;
+    border: 1px solid $blue-700;
+    border-radius: 20px;
+    width: 120px;
+    color: $blue-700;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0px 5px 0px 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $gray-100;
+    }
+}
+
+.signUpButton {
+    height: 35px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: $white;
+    background-color: $blue-700;
+    border-radius: 20px;
+    border: 1px solid $blue-700;
+    width: 120px;
+    margin: 0px 5px 0px 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $blue-600;
+    }
+}
+
+.smGrayIcon {
+    color: $gray-600;
+    font-size: 25px !important;
+}
+
+.iconContainer {
+    margin: 0px 5px 0px 5px;
+    cursor: pointer;
+    border: 1px solid $white;
+    height: 35px;
+    padding: 0px 5px 0px 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 5px;
+
+    &:hover {
+        border: 1px solid $gray-200;
+    }
+}
+
+// Right menu
+.rightMenuItem {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+}
+
+.rightMenuIcon {
+    margin-right: 12px;
+    font-size: 24px;
+}
+
+// Home menu (drop down menu on left side of nav)
+// .homeMenuButtonContainer {
+//     display: inline-block;
+//     width: 220px;
+//     height: 35px;
+
+//     .homeMenuButton {
+//         border: 1px solid $white;
+//         background-color: transparent;
+//         cursor: pointer;
+//         border-radius: 5px;
+//         height: 100%;
+//         display: flex;
+//         flex-direction: row;
+//         align-items: center;
+//         padding: 0 10px 0 10px;
+//         width: 100%;
+
+//         &:hover {
+//             border: 1px solid $gray-200;
+//         }
+
+//         .homeIcon {
+//             margin-right: 10px;
+//         }
+
+//         .downArrowIcon {
+//             margin-left: auto;
+//         }
+//     }
+
+//     .homeMenu {
+//         background-color: $white;
+//         width: 220px;
+//         height: 400px;
+//         overflow-y: scroll;
+
+//         ul {
+//             list-style-type: none;
+//             padding: 0;
+//         }
+//     }
+// }

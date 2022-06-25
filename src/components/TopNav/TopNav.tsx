@@ -1,61 +1,100 @@
-import styles from "./TopNav.module.scss"
-import { styled } from "@mui/system"
-import { MenuItemUnstyled, MenuUnstyled } from "@mui/base"
+import { AccountCircle, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
+import { Input, InputAdornment, Menu, MenuItem } from "@mui/material"
 import React, { useState } from "react"
-
-const TriggerButton = styled('button')(
-    ({ theme }) => `
-    font-size: 0.875rem;
-    box-sizing: border-box;
-    min-height: calc(1.5em + 22px);
-    border-radius: 0.75em;
-    margin: 0.5em;
-    padding: 10px 20px;
-    line-height: 1.5;
-    `
-)
-
-const StyledMenuItem = styled(MenuItemUnstyled)(
-    ({ theme }) => `
-    list-style: none;
-    padding: 8px;
-    border-radius: 0.45em;
-    cursor: default;
-    user-select: none;
-    `
-)
+import styles from "./TopNav.module.scss"
 
 const TopNav = () => {
 
-    // Anchor and open boolean for home menu
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-    const isOpen = Boolean(anchorEl)
+    const [rightMenuAnchorEl, setRightMenuAnchorEl] = useState<null | HTMLElement>(null)
+    const rightMenuOpen = Boolean(rightMenuAnchorEl)
 
-    const handleHomeMenuClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (isOpen) {
-            setAnchorEl(null)
-        } else {
-            setAnchorEl(event.currentTarget)
-        }
+    const handleRightMenuClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        setRightMenuAnchorEl(event.currentTarget)
+    }
+
+    const handleRightMenuClose = () => {
+        setRightMenuAnchorEl(null)
     }
 
     return (
         <nav className={styles.TopNavContainer}>
             <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
-            <TriggerButton
-                type="button"
-                onClick={handleHomeMenuClicked}
-            >
-                Home
-            </TriggerButton>
-            <MenuUnstyled
-                open={isOpen}
-                anchorEl={anchorEl}
-            >
-                <StyledMenuItem>
+            <Input
+                className={styles.searchInput}
+                disableUnderline={true}
+                placeholder="Search Reddit"
+                startAdornment={
+                    <InputAdornment position="start">
+                        <Search className={styles.smGrayIcon} />
+                    </InputAdornment>
+                }
+            />
+
+            <div className={styles.rightButtonSection}>
+                <button className={styles.logInButton}>
+                    Log In
+                </button>
+                <button className={styles.signUpButton}>
+                    Sign Up
+                </button>
+                <div className={styles.iconContainer}
+                    onClick={handleRightMenuClick}
+                >
+                    <PermIdentity className={styles.smGrayIcon} />
+                    <KeyboardArrowDown className={styles.smGrayIcon} />
+                </div>
+                <Menu
+                    anchorEl={rightMenuAnchorEl}
+                    open={rightMenuOpen}
+                    onClose={handleRightMenuClose}
+                >
+                    <MenuItem onClick={handleRightMenuClose} className={styles.rightMenuItem}>
+                        <AccountCircle className={styles.rightMenuIcon} />
+                        Sign Up or Log In
+                    </MenuItem>
+                </Menu>
+            </div>
+            {/* Home menu button (WIP) */}
+            {/* <div className={styles.homeMenuButtonContainer}>
+                <button
+                    className={styles.homeMenuButton}
+                >
+                    <Home className={styles.homeIcon} />
                     Home
-                </StyledMenuItem>
-            </MenuUnstyled>
+                    <KeyboardArrowDown className={styles.downArrowIcon} />
+                </button>
+                <div className={styles.homeMenu}>
+                    <ul>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+                        <li>Home</li>
+
+                    </ul>
+                </div>
+            </div> */}
         </nav>
     )
 }

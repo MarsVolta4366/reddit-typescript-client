@@ -4,3 +4,9 @@ body {
     margin: 0;
     background-color: $dark-000;
 }
+
+// This is for the search input in TopNav
+.Mui-focused {
+    border: 1px solid $blue-700  !important;
+    background-color: transparent !important;
+}
