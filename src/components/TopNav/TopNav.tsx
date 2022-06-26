@@ -1,12 +1,14 @@
-import { AccountCircle, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
+import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
 import { Input, InputAdornment, Menu, MenuItem } from "@mui/material"
 import React, { useState } from "react"
+import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
 
 const TopNav = () => {
 
     const [rightMenuAnchorEl, setRightMenuAnchorEl] = useState<null | HTMLElement>(null)
     const rightMenuOpen = Boolean(rightMenuAnchorEl)
+    const { theme, setTheme } = useThemeContext()
 
     const handleRightMenuClick = (event: React.MouseEvent<HTMLDivElement>) => {
         setRightMenuAnchorEl(event.currentTarget)
@@ -14,6 +16,12 @@ const TopNav = () => {
 
     const handleRightMenuClose = () => {
         setRightMenuAnchorEl(null)
+    }
+
+    const toggleTheme = () => {
+        handleRightMenuClose()
+        theme === "light" ? localStorage.setItem("theme", "dark") : localStorage.setItem("theme", "light")
+        setTheme(theme === "light" ? "dark" : "light")
     }
 
     return (
@@ -51,6 +59,10 @@ const TopNav = () => {
                     <MenuItem onClick={handleRightMenuClose} className={styles.rightMenuItem}>
                         <AccountCircle className={styles.rightMenuIcon} />
                         Sign Up or Log In
+                    </MenuItem>
+                    <MenuItem onClick={toggleTheme} className={styles.rightMenuItem}>
+                        <DarkMode className={styles.rightMenuIcon} />
+                        Dark Mode
                     </MenuItem>
                 </Menu>
             </div>
