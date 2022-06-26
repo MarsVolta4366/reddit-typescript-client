@@ -98,6 +98,11 @@
     }
 }
 
+.searchLabel {
+    display: flex;
+    align-content: center;
+}
+
 // Right button section (contains log in, sign up, and right menu buttons)
 .rightButtonSection {
     display: flex;

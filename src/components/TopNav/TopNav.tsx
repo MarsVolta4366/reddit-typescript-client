@@ -28,8 +28,10 @@ const TopNav = () => {
         <nav className={`${styles.TopNavContainer} componentBackground`}>
             <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
             <div className={`${styles[theme]} ${styles.searchInputContainer}`}>
-                <Search className={styles.searchIcon} />
-                <input type="text" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
+                <label htmlFor="search" className={styles.searchLabel}>
+                    <Search className={styles.searchIcon} />
+                </label>
+                <input type="text" name="search" id="search" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
             </div>
             <div className={styles.rightButtonSection}>
                 <button className={`${styles[theme]} ${styles.logInButton}`}>
