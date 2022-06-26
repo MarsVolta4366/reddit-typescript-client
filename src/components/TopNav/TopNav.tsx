@@ -1,5 +1,5 @@
 import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
-import { Input, InputAdornment, Menu, MenuItem } from "@mui/material"
+import { Menu, MenuItem } from "@mui/material"
 import React, { useState } from "react"
 import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
@@ -27,17 +27,10 @@ const TopNav = () => {
     return (
         <nav className={`${styles.TopNavContainer} componentBackground`}>
             <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
-            <Input
-                className={`${styles[theme]} ${styles.searchInput} mainText`}
-                disableUnderline={true}
-                placeholder="Search Reddit"
-                startAdornment={
-                    <InputAdornment position="start">
-                        <Search className={styles.smGrayIcon} />
-                    </InputAdornment>
-                }
-            />
-
+            <div className={`${styles[theme]} ${styles.searchInputContainer}`}>
+                <Search className={styles.searchIcon} />
+                <input type="text" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
+            </div>
             <div className={styles.rightButtonSection}>
                 <button className={`${styles[theme]} ${styles.logInButton}`}>
                     Log In
