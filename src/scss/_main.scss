@@ -2,7 +2,38 @@
 
 body {
     margin: 0;
-    background-color: $dark-000;
+}
+
+.container {
+    height: 100vh;
+}
+
+.light {
+    .mainText {
+        color: $dark-900;
+    }
+
+    .appBackground {
+        background-color: $dark-000;
+    }
+
+    .componentBackground {
+        background-color: $white;
+    }
+}
+
+.dark {
+    .mainText {
+        color: $white;
+    }
+
+    .appBackground {
+        background-color: $black;
+    }
+
+    .componentBackground {
+        background-color: $dark-700;
+    }
 }
 
 // This is for the search input in TopNav

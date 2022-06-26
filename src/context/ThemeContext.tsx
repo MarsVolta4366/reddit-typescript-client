@@ -11,3 +11,5 @@ export const MyThemeContext = createContext<ThemeInitialState>({
 })
 
 export const useThemeContext = () => useContext(MyThemeContext)
+
+// Used this article: https://dev.to/madv/usecontext-with-typescript-23ln

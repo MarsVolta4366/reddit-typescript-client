@@ -1,7 +1,6 @@
 @use "../../scss/colors" as *;
 
 .TopNavContainer {
-    background-color: $white;
     padding: 5px 20px 5px 20px;
     position: fixed;
     top: 0;
@@ -19,13 +18,16 @@
 .searchInput {
     width: 600px;
     height: 35px;
-    background-color: $gray-100;
-    border: 1px solid $gray-200;
     border-radius: 5px;
     padding: 5px;
     box-sizing: border-box;
     font-size: 14px !important;
     font-family: 'Noto Sans', sans-serif !important;
+}
+
+.light.searchInput {
+    background-color: $gray-100;
+    border: 1px solid $gray-200;
 
     &:hover {
         border: 1px solid $blue-700;
@@ -33,7 +35,17 @@
     }
 }
 
-// Right button section (contains log in, sign up, and profile buttons)
+.dark.searchInput {
+    background-color: $dark-600;
+    border: 1px solid $dark-400;
+
+    &:hover {
+        border: 1px solid $white;
+        background-color: transparent;
+    }
+}
+
+// Right button section (contains log in, sign up, and right menu buttons)
 .rightButtonSection {
     display: flex;
     flex-direction: row;
@@ -43,19 +55,31 @@
 
 .logInButton {
     height: 35px;
-    background-color: transparent;
-    border: 1px solid $blue-700;
     border-radius: 20px;
     width: 120px;
-    color: $blue-700;
     font-family: 'Noto Sans', sans-serif;
     font-weight: 700;
     font-size: 14px;
     margin: 0px 5px 0px 5px;
     cursor: pointer;
+    background-color: transparent;
+}
+
+.light.logInButton {
+    border: 1px solid $blue-700;
+    color: $blue-700;
 
     &:hover {
         background-color: $gray-100;
+    }
+}
+
+.dark.logInButton {
+    border: 1px solid $white;
+    color: $white;
+
+    &:hover {
+        background-color: $gray-900;
     }
 }
 
@@ -64,16 +88,29 @@
     font-family: 'Noto Sans', sans-serif;
     font-size: 14px;
     font-weight: 700;
-    color: $white;
-    background-color: $blue-700;
     border-radius: 20px;
-    border: 1px solid $blue-700;
     width: 120px;
     margin: 0px 5px 0px 5px;
     cursor: pointer;
+}
+
+.light.signUpButton {
+    color: $white;
+    background-color: $blue-700;
+    border: 1px solid $blue-700;
 
     &:hover {
         background-color: $blue-600;
+    }
+}
+
+.dark.signUpButton {
+    color: $dark-700;
+    background-color: $white;
+    border: 1px solid $white;
+
+    &:hover {
+        background-color: $dark-000;
     }
 }
 
@@ -85,7 +122,6 @@
 .iconContainer {
     margin: 0px 5px 0px 5px;
     cursor: pointer;
-    border: 1px solid $white;
     height: 35px;
     padding: 0px 5px 0px 5px;
     display: flex;
@@ -94,8 +130,16 @@
     border-radius: 5px;
 
     &:hover {
-        border: 1px solid $gray-200;
+        border: 1px solid $gray-500  !important;
     }
+}
+
+.light.iconContainer {
+    border: 1px solid $white;
+}
+
+.dark.iconContainer {
+    border: 1px solid $dark-700;
 }
 
 // Right menu

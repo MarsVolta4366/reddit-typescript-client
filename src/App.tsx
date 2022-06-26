@@ -9,8 +9,10 @@ function App() {
 
   return (
     <MyThemeContext.Provider value={{ theme, setTheme }}>
-      <div className="app">
-        <TopNav />
+      <div className={`${theme}`}>
+        <div className="appBackground container">
+          <TopNav />
+        </div>
       </div>
     </MyThemeContext.Provider>
   )

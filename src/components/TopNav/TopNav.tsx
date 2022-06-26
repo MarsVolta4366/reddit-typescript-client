@@ -25,10 +25,10 @@ const TopNav = () => {
     }
 
     return (
-        <nav className={styles.TopNavContainer}>
+        <nav className={`${styles.TopNavContainer} componentBackground`}>
             <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
             <Input
-                className={styles.searchInput}
+                className={`${styles[theme]} ${styles.searchInput} mainText`}
                 disableUnderline={true}
                 placeholder="Search Reddit"
                 startAdornment={
@@ -39,13 +39,13 @@ const TopNav = () => {
             />
 
             <div className={styles.rightButtonSection}>
-                <button className={styles.logInButton}>
+                <button className={`${styles[theme]} ${styles.logInButton}`}>
                     Log In
                 </button>
-                <button className={styles.signUpButton}>
+                <button className={`${styles[theme]} ${styles.signUpButton}`}>
                     Sign Up
                 </button>
-                <div className={styles.iconContainer}
+                <div className={`${styles[theme]} ${styles.iconContainer}`}
                     onClick={handleRightMenuClick}
                 >
                     <PermIdentity className={styles.smGrayIcon} />
