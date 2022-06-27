@@ -36,8 +36,8 @@ body {
     }
 }
 
-// This is for the search input in TopNav
-// .Mui-focused {
-//     border: 1px solid $blue-700  !important;
-//     background-color: transparent !important;
-// }
+// This is for the right menu in TopNav
+.MuiList-root {
+    padding: 0 !important;
+    background-color: $dark-900;
+}

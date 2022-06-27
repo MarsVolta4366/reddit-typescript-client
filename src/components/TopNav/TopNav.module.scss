@@ -206,10 +206,35 @@
     font-size: 14px;
 }
 
+.light.rightMenuItem {
+    background-color: $white  !important;
+    color: $dark-900;
+
+    &:hover {
+        background-color: $gray-100  !important;
+    }
+}
+
+.dark.rightMenuItem {
+    background-color: $dark-700  !important;
+    color: $white  !important;
+
+    &:hover {
+        background-color: $gray-900  !important;
+    }
+}
+
 .rightMenuIcon {
     margin-right: 12px;
     font-size: 24px;
-    color: $dark-500;
+}
+
+.light.rightMenuIcon {
+    color: $dark-500
+}
+
+.dark.rightMenuIcon {
+    color: $white;
 }
 
 // Home menu (drop down menu on left side of nav)

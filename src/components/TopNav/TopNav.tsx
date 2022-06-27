@@ -51,12 +51,12 @@ const TopNav = () => {
                     open={rightMenuOpen}
                     onClose={handleRightMenuClose}
                 >
-                    <MenuItem onClick={handleRightMenuClose} className={styles.rightMenuItem}>
-                        <AccountCircle className={styles.rightMenuIcon} />
+                    <MenuItem onClick={handleRightMenuClose} className={`${styles[theme]} ${styles.rightMenuItem}`}>
+                        <AccountCircle className={`${styles[theme]} ${styles.rightMenuIcon}`} />
                         Sign Up or Log In
                     </MenuItem>
-                    <MenuItem onClick={toggleTheme} className={styles.rightMenuItem}>
-                        <DarkMode className={styles.rightMenuIcon} />
+                    <MenuItem onClick={toggleTheme} className={`${styles[theme]} ${styles.rightMenuItem}`}>
+                        <DarkMode className={`${styles[theme]} ${styles.rightMenuIcon}`} />
                         Dark Mode
                     </MenuItem>
                 </Menu>
