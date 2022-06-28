@@ -1,5 +1,5 @@
 import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
-import { Menu, MenuItem } from "@mui/material"
+import { Menu, MenuItem, Switch } from "@mui/material"
 import React, { useState } from "react"
 import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
@@ -19,7 +19,6 @@ const TopNav = () => {
     }
 
     const toggleTheme = () => {
-        handleRightMenuClose()
         theme === "light" ? localStorage.setItem("theme", "dark") : localStorage.setItem("theme", "light")
         setTheme(theme === "light" ? "dark" : "light")
     }
@@ -58,6 +57,7 @@ const TopNav = () => {
                     <MenuItem onClick={toggleTheme} className={`${styles[theme]} ${styles.rightMenuItem}`}>
                         <DarkMode className={`${styles[theme]} ${styles.rightMenuIcon}`} />
                         Dark Mode
+                        <Switch checked={theme === "dark" ? true : false} />
                     </MenuItem>
                 </Menu>
             </div>
