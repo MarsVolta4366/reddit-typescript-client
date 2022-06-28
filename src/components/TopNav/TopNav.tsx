@@ -1,10 +1,14 @@
 import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
 import { Menu, MenuItem, Switch } from "@mui/material"
-import React, { useState } from "react"
+import React, { SetStateAction, useState } from "react"
 import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
 
-const TopNav = () => {
+type Props = {
+    setSignUpDialogOpen: React.Dispatch<SetStateAction<boolean>>
+}
+
+const TopNav = ({ setSignUpDialogOpen }: Props) => {
 
     const [rightMenuAnchorEl, setRightMenuAnchorEl] = useState<null | HTMLElement>(null)
     const rightMenuOpen = Boolean(rightMenuAnchorEl)
@@ -36,7 +40,7 @@ const TopNav = () => {
                 <button className={`${styles[theme]} ${styles.logInButton}`}>
                     Log In
                 </button>
-                <button className={`${styles[theme]} ${styles.signUpButton}`}>
+                <button className={`${styles[theme]} ${styles.signUpButton}`} onClick={() => setSignUpDialogOpen(true)}>
                     Sign Up
                 </button>
                 <div className={`${styles[theme]} ${styles.iconContainer}`}
