@@ -54,7 +54,13 @@ const TopNav = ({ setSignUpDialogOpen }: Props) => {
                     open={rightMenuOpen}
                     onClose={handleRightMenuClose}
                 >
-                    <MenuItem onClick={handleRightMenuClose} className={`${styles[theme]} ${styles.rightMenuItem}`}>
+                    <MenuItem
+                        onClick={() => {
+                            setRightMenuAnchorEl(null)
+                            setSignUpDialogOpen(true)
+                        }}
+                        className={`${styles[theme]} ${styles.rightMenuItem}`}
+                    >
                         <AccountCircle className={`${styles[theme]} ${styles.rightMenuIcon}`} />
                         Sign Up or Log In
                     </MenuItem>

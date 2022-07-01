@@ -1,5 +1,5 @@
 import { useState } from "react"
-import SignUpDialog from "./components/TopNav/SignUpDialog/SignUpDialog"
+import SignUpDialog from "./components/SignUpDialog/SignUpDialog"
 import TopNav from "./components/TopNav/TopNav"
 import { MyThemeContext } from "./context/ThemeContext"
 import "./scss/_main.scss"
