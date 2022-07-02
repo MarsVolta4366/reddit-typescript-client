@@ -10,27 +10,34 @@ type Props = {
 
 const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
 
+    const usernamePattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
+
     const [user, setUser] = useState({ username: "", password: "" })
     const [usernameTaken, setUsernameTaken] = useState(false)
+    const [usernameLongEnough, setUsernameLongEnough] = useState(true)
+    const [passwordLongEnough, setPasswordLongEnough] = useState(true)
+    const [usernamePassesRegExp, setUsernamePassesRegExp] = useState(true)
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
 
-        const submitUser = await fetch("http://localhost:4000/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
+        if (usernamePattern.test(user.username)) {
+            const submitUser = await fetch("http://localhost:4000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
 
-        const submitUserResponse = await submitUser.json()
+            const submitUserResponse = await submitUser.json()
 
-        if (submitUserResponse.message === "Username is already taken") {
-            setUsernameTaken(true)
-        } else {
-            // Log in user after sign up
-            setSignUpDialogOpen(false)
+            if (submitUserResponse.message === "Username is already taken") {
+                setUsernameTaken(true)
+            } else {
+                // Log in user after sign up
+                setSignUpDialogOpen(false)
+            }
         }
     }
 
@@ -53,10 +60,16 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
                     <TextField
                         variant="outlined"
                         label="CHOOSE A USERNAME"
-                        onChange={(e) => setUser({ ...user, username: e.target.value })}
+                        onChange={(e) => {
+                            setUser({ ...user, username: e.target.value })
+                            setUsernameTaken(false)
+                            e.target.value.length < 3 ? setUsernameLongEnough(false) : setUsernameLongEnough(true)
+                            // Make sure username only includes letters, numbers, dashes, and underscores
+                            setUsernamePassesRegExp(usernamePattern.test(e.target.value))
+                        }}
                         value={user.username}
-                        error={usernameTaken}
-                        helperText={usernameTaken && "Username is already taken"}
+                        error={usernameTaken || !usernameLongEnough || !usernamePassesRegExp}
+                        helperText={(usernameTaken && "Username is already taken") || (!usernamePassesRegExp && "Letters, numbers, dashes, and underscores only. Please try again without symbols.") || (!usernameLongEnough && "Username must be between 3 and 20 characters")}
                         required
                         inputProps={{ minLength: 3, maxLength: 20 }}
                     />
@@ -64,7 +77,13 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
                         variant="outlined"
                         label="PASSWORD"
                         type="password"
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                        onChange={(e) => {
+                            setUser({ ...user, password: e.target.value })
+                            e.target.value.length < 8 ? setPasswordLongEnough(false) : setPasswordLongEnough(true)
+                        }}
+                        value={user.password}
+                        error={!passwordLongEnough}
+                        helperText={!passwordLongEnough && "Password must be at least 8 characters long"}
                         required
                         inputProps={{ minLength: 8, maxLength: 50 }}
                     />
