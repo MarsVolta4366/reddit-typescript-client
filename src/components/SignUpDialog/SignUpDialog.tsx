@@ -37,6 +37,16 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
             } else {
                 // Log in user after sign up
                 setSignUpDialogOpen(false)
+                const logInUser = await fetch("http://localhost:4000/auth", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify(user)
+                })
+                const logInUserResponse = await logInUser.json()
+                console.log(logInUserResponse)
             }
         }
     }
