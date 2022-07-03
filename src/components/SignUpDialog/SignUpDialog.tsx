@@ -13,7 +13,7 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
 
     const usernamePattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
 
-    const { currentUser, setCurrentUser } = useCurrentUserContext()
+    const { setCurrentUser } = useCurrentUserContext()
     const [user, setUser] = useState({ username: "", password: "" })
     const [usernameTaken, setUsernameTaken] = useState(false)
     const [usernameLongEnough, setUsernameLongEnough] = useState(true)
@@ -24,31 +24,20 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
         e.preventDefault()
 
         if (usernamePattern.test(user.username)) {
-            const submitUser = await fetch("http://localhost:4000/users", {
+            const submitUser = await (await fetch("http://localhost:4000/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify(user)
-            })
+            })).json()
 
-            const submitUserResponse = await submitUser.json()
-
-            if (submitUserResponse.message === "Username is already taken") {
+            if (submitUser.message === "Username is already taken") {
                 setUsernameTaken(true)
-            } else {
-                // Log in user after sign up
+            } else if (submitUser.username) {
+                setCurrentUser(submitUser)
                 setSignUpDialogOpen(false)
-                const logInUser = await fetch("http://localhost:4000/auth", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "include",
-                    body: JSON.stringify(user)
-                })
-                const logInUserResponse = await logInUser.json()
-                setCurrentUser(logInUserResponse)
             }
         }
     }
@@ -103,7 +92,6 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
                     <button type="submit">Sign Up</button>
                 </form>
             </DialogContent>
-
         </Dialog>
     )
 }

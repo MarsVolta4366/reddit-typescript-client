@@ -11,15 +11,15 @@ function App() {
   const [currentUser, setCurrentUser] = useState<{ username: string } | null>(null)
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false)
 
+  // Get user profile if session exists
   useEffect(() => {
-    const getLoggedInUser = async () => {
-      const loggedInUser = await fetch("http://localhost:4000/auth/profile", {
+    const getCurrentUser = async () => {
+      const userProfile = await (await fetch("http://localhost:4000/auth/profile", {
         credentials: "include"
-      })
-      const loggedInUserResponse = await loggedInUser.json()
-      setCurrentUser(loggedInUserResponse)
+      })).json()
+      setCurrentUser(userProfile)
     }
-    getLoggedInUser()
+    getCurrentUser()
   }, [])
 
   const logOut = async () => {
