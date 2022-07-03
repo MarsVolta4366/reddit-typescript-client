@@ -14,6 +14,7 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
     const usernamePattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
 
     const { setCurrentUser } = useCurrentUserContext()
+    // user is object with credentials submitted by NEW user to create an account
     const [user, setUser] = useState({ username: "", password: "" })
     const [usernameTaken, setUsernameTaken] = useState(false)
     const [usernameLongEnough, setUsernameLongEnough] = useState(true)

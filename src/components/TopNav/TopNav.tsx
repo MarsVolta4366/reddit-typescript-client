@@ -5,10 +5,11 @@ import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
 
 type Props = {
-    setSignUpDialogOpen: React.Dispatch<SetStateAction<boolean>>
+    setSignUpDialogOpen: React.Dispatch<SetStateAction<boolean>>,
+    setLogInDialogOpen: React.Dispatch<SetStateAction<boolean>>
 }
 
-const TopNav = ({ setSignUpDialogOpen }: Props) => {
+const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
 
     const [rightMenuAnchorEl, setRightMenuAnchorEl] = useState<null | HTMLElement>(null)
     const rightMenuOpen = Boolean(rightMenuAnchorEl)
@@ -37,7 +38,7 @@ const TopNav = ({ setSignUpDialogOpen }: Props) => {
                 <input type="text" name="search" id="search" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
             </div>
             <div className={styles.rightButtonSection}>
-                <button className={`${styles[theme]} ${styles.logInButton}`}>
+                <button className={`${styles[theme]} ${styles.logInButton}`} onClick={() => setLogInDialogOpen(true)}>
                     Log In
                 </button>
                 <button className={`${styles[theme]} ${styles.signUpButton}`} onClick={() => setSignUpDialogOpen(true)}>
