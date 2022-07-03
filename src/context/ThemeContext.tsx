@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react"
 
-export type ThemeInitialState = {
+type ThemeInitialState = {
     theme: string,
     setTheme: (newTheme: string) => void
 }

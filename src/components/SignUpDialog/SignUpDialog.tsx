@@ -1,6 +1,7 @@
 import { Close } from "@mui/icons-material"
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, TextField } from "@mui/material"
 import React, { SetStateAction, useState } from "react"
+import { useCurrentUserContext } from "../../context/CurrentUserContext"
 // import styles from "./SignUpDialog.module.scss"
 
 type Props = {
@@ -12,6 +13,7 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
 
     const usernamePattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
 
+    const { currentUser, setCurrentUser } = useCurrentUserContext()
     const [user, setUser] = useState({ username: "", password: "" })
     const [usernameTaken, setUsernameTaken] = useState(false)
     const [usernameLongEnough, setUsernameLongEnough] = useState(true)
@@ -46,7 +48,7 @@ const SignUpDialog = ({ signUpDialogOpen, setSignUpDialogOpen }: Props) => {
                     body: JSON.stringify(user)
                 })
                 const logInUserResponse = await logInUser.json()
-                console.log(logInUserResponse)
+                setCurrentUser(logInUserResponse)
             }
         }
     }
