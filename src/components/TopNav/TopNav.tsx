@@ -1,6 +1,7 @@
 import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
 import { Menu, MenuItem, Switch } from "@mui/material"
 import React, { SetStateAction, useState } from "react"
+import { useCurrentUserContext } from "../../context/CurrentUserContext"
 import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
 
@@ -11,6 +12,7 @@ type Props = {
 
 const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
 
+    const { currentUser, setCurrentUser } = useCurrentUserContext()
     const [rightMenuAnchorEl, setRightMenuAnchorEl] = useState<null | HTMLElement>(null)
     const rightMenuOpen = Boolean(rightMenuAnchorEl)
     const { theme, setTheme } = useThemeContext()
@@ -28,6 +30,14 @@ const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
         setTheme(theme === "light" ? "dark" : "light")
     }
 
+    const handleLogOut = async () => {
+        const logOutFetch = await fetch("http://localhost:4000/auth/logout", {
+            credentials: "include"
+        })
+        await logOutFetch.json()
+        setCurrentUser(null)
+    }
+
     return (
         <nav className={`${styles.TopNavContainer} componentBackground`}>
             <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
@@ -37,13 +47,20 @@ const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
                 </label>
                 <input type="text" name="search" id="search" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
             </div>
+
             <div className={styles.rightButtonSection}>
-                <button className={`${styles[theme]} ${styles.logInButton}`} onClick={() => setLogInDialogOpen(true)}>
-                    Log In
-                </button>
-                <button className={`${styles[theme]} ${styles.signUpButton}`} onClick={() => setSignUpDialogOpen(true)}>
-                    Sign Up
-                </button>
+                {
+                    !currentUser &&
+                    <>
+                        <button className={`${styles[theme]} ${styles.logInButton}`} onClick={() => setLogInDialogOpen(true)}>
+                            Log In
+                        </button>
+                        <button className={`${styles[theme]} ${styles.signUpButton}`} onClick={() => setSignUpDialogOpen(true)}>
+                            Sign Up
+                        </button>
+                    </>
+                }
+                <p>{currentUser?.username}</p>
                 <div className={`${styles[theme]} ${styles.iconContainer}`}
                     onClick={handleRightMenuClick}
                 >
@@ -55,21 +72,36 @@ const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
                     open={rightMenuOpen}
                     onClose={handleRightMenuClose}
                 >
-                    <MenuItem
-                        onClick={() => {
-                            setRightMenuAnchorEl(null)
-                            setSignUpDialogOpen(true)
-                        }}
-                        className={`${styles[theme]} ${styles.rightMenuItem}`}
-                    >
-                        <AccountCircle className={`${styles[theme]} ${styles.rightMenuIcon}`} />
-                        Sign Up or Log In
-                    </MenuItem>
                     <MenuItem onClick={toggleTheme} className={`${styles[theme]} ${styles.rightMenuItem}`}>
                         <DarkMode className={`${styles[theme]} ${styles.rightMenuIcon}`} />
                         Dark Mode
                         <Switch checked={theme === "dark" ? true : false} />
                     </MenuItem>
+                    {
+                        !currentUser &&
+                        <MenuItem
+                            onClick={() => {
+                                setRightMenuAnchorEl(null)
+                                setSignUpDialogOpen(true)
+                            }}
+                            className={`${styles[theme]} ${styles.rightMenuItem}`}
+                        >
+                            <AccountCircle className={`${styles[theme]} ${styles.rightMenuIcon}`} />
+                            Sign Up or Log In
+                        </MenuItem>
+                    }
+                    {
+                        currentUser &&
+                        <MenuItem
+                            onClick={() => {
+                                handleLogOut()
+                                setRightMenuAnchorEl(null)
+                            }}
+                            className={`${styles[theme]} ${styles.rightMenuItem}`}
+                        >
+                            Log Out
+                        </MenuItem>
+                    }
                 </Menu>
             </div>
             {/* Home menu button (WIP) */}

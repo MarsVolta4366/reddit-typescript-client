@@ -6,7 +6,7 @@ type UserState = {
 
 type UserInitialState = {
     currentUser: { username: string } | null,
-    setCurrentUser: (userObject: UserState) => void
+    setCurrentUser: (userObject: UserState | null) => void
 }
 
 export const CurrentUserContext = createContext<UserInitialState>({

@@ -24,14 +24,6 @@ function App() {
     getCurrentUser()
   }, [])
 
-  const logOut = async () => {
-    const logOutFetch = await fetch("http://localhost:4000/auth/logout", {
-      credentials: "include"
-    })
-    await logOutFetch.json()
-    setCurrentUser(null)
-  }
-
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <MyThemeContext.Provider value={{ theme, setTheme }}>
@@ -40,8 +32,6 @@ function App() {
             <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
             <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
             <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-            <button style={{ marginTop: "100px" }} onClick={logOut}>Log out</button>
-            <h1 style={{ marginTop: "100px" }}>{currentUser ? currentUser.username : ""}</h1>
           </div>
         </div>
       </MyThemeContext.Provider>
