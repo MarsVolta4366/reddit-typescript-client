@@ -61,6 +61,7 @@ const LogInDialog = ({ logInDialogOpen, setLogInDialogOpen }: props) => {
                         }}
                         error={incorrectLogIn}
                         helperText={incorrectLogIn && "Incorrect username or password"}
+                        inputProps={{ minLength: 3, maxLength: 20 }}
                     />
                     <TextField
                         variant="outlined"
@@ -73,6 +74,7 @@ const LogInDialog = ({ logInDialogOpen, setLogInDialogOpen }: props) => {
                         }}
                         error={incorrectLogIn}
                         type="password"
+                        inputProps={{ minLength: 8, maxLength: 50 }}
                     />
                     <button type="submit">Log In</button>
                 </form>

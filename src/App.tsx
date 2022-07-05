@@ -1,3 +1,4 @@
+import { LinearProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import LogInDialog from "./components/LogInDialog/LogInDialog"
 import SignUpDialog from "./components/SignUpDialog/SignUpDialog"
@@ -12,14 +13,17 @@ function App() {
   const [currentUser, setCurrentUser] = useState<{ username: string } | null>(null)
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false)
   const [logInDialogOpen, setLogInDialogOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   // Get user profile if session exists
   useEffect(() => {
     const getCurrentUser = async () => {
+      setLoading(true)
       const userProfile = await (await fetch("http://localhost:4000/auth/profile", {
         credentials: "include"
       })).json()
       setCurrentUser(userProfile)
+      setLoading(false)
     }
     getCurrentUser()
   }, [])
@@ -31,7 +35,11 @@ function App() {
           <div className="appBackground container">
             <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
             <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-            <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+            {
+              loading ?
+                <LinearProgress /> :
+                <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+            }
           </div>
         </div>
       </MyThemeContext.Provider>
