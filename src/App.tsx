@@ -1,5 +1,7 @@
 import { LinearProgress } from "@mui/material"
 import { useEffect, useState } from "react"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import CreatePostLinkBox from "./components/CreatePostLinkBox/CreatePostLinkBox"
 import LogInDialog from "./components/LogInDialog/LogInDialog"
 import SignUpDialog from "./components/SignUpDialog/SignUpDialog"
 import TopNav from "./components/TopNav/TopNav"
@@ -31,17 +33,29 @@ function App() {
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <MyThemeContext.Provider value={{ theme, setTheme }}>
-        <div className={`${theme}`}>
-          <div className="appBackground container">
-            <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
-            <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-            {
-              loading ?
-                <LinearProgress /> :
-                <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-            }
+        <Router>
+          <div className={`${theme}`}>
+            <div className="appBackground container">
+              <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
+              <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+              {
+                loading ?
+                  <LinearProgress /> :
+                  <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+              }
+              <Routes>
+                <Route path="/" element={
+                  <div style={{ paddingTop: "60px" }}>
+                    {currentUser && <CreatePostLinkBox />}
+                  </div>
+                } />
+                <Route path="/submit" element={
+                  <div style={{ paddingTop: "60px" }}>Create a post form</div>
+                } />
+              </Routes>
+            </div>
           </div>
-        </div>
+        </Router>
       </MyThemeContext.Provider>
     </CurrentUserContext.Provider>
   )

@@ -47,7 +47,6 @@ const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
                 </label>
                 <input type="text" name="search" id="search" className={`${styles[theme]} ${styles.searchInput}`} placeholder="Search Reddit" />
             </div>
-
             <div className={styles.rightButtonSection}>
                 {
                     !currentUser &&
