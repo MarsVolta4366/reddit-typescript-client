@@ -2,17 +2,19 @@ import { LinearProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import CreatePostLinkBox from "./components/CreatePostLinkBox/CreatePostLinkBox"
+import CreatePostPage from "./components/CreatePostPage/CreatePostPage"
 import LogInDialog from "./components/LogInDialog/LogInDialog"
 import SignUpDialog from "./components/SignUpDialog/SignUpDialog"
 import TopNav from "./components/TopNav/TopNav"
 import { CurrentUserContext } from "./context/CurrentUserContext"
 import { MyThemeContext } from "./context/ThemeContext"
 import "./scss/_main.scss"
+import { UserState } from "./context/CurrentUserContext"
 
 function App() {
 
   const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light")
-  const [currentUser, setCurrentUser] = useState<{ username: string } | null>(null)
+  const [currentUser, setCurrentUser] = useState<UserState>(null)
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false)
   const [logInDialogOpen, setLogInDialogOpen] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -44,13 +46,17 @@ function App() {
                   <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
               }
               <Routes>
+                {/* Home page */}
                 <Route path="/" element={
                   <div style={{ paddingTop: "60px" }}>
                     {currentUser && <CreatePostLinkBox />}
                   </div>
                 } />
+                {/* Create a post page */}
                 <Route path="/submit" element={
-                  <div style={{ paddingTop: "60px" }}>Create a post form</div>
+                  <div style={{ paddingTop: "60px" }}>
+                    <CreatePostPage />
+                  </div>
                 } />
               </Routes>
             </div>

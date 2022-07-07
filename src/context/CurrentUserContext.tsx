@@ -1,12 +1,12 @@
 import { createContext, useContext } from "react"
 
-type UserState = {
+export type UserState = {
     username: string
-}
+} | null
 
 type UserInitialState = {
-    currentUser: { username: string } | null,
-    setCurrentUser: (userObject: UserState | null) => void
+    currentUser: UserState,
+    setCurrentUser: (userObject: UserState) => void
 }
 
 export const CurrentUserContext = createContext<UserInitialState>({
