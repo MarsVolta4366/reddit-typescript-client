@@ -10,26 +10,37 @@ import { CurrentUserContext } from "./context/CurrentUserContext"
 import { MyThemeContext } from "./context/ThemeContext"
 import "./scss/_main.scss"
 import { UserState } from "./context/CurrentUserContext"
+import PostsGallery, { PostType } from "./components/PostsGallery/PostsGallery"
 
 function App() {
 
   const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light")
   const [currentUser, setCurrentUser] = useState<UserState>(null)
+  const [posts, setPosts] = useState<PostType[]>([])
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false)
   const [logInDialogOpen, setLogInDialogOpen] = useState(false)
   const [loading, setLoading] = useState(true)
 
   // Get user profile if session exists
   useEffect(() => {
-    const getCurrentUser = async () => {
+    const getData = async () => {
       setLoading(true)
+
+      // Fetch user information if currently logged in
       const userProfile = await (await fetch("http://localhost:4000/auth/profile", {
         credentials: "include"
       })).json()
       setCurrentUser(userProfile)
+      // Fetch posts for PostsGallery
+      const fetchedPosts = await (
+        await fetch("http://localhost:4000/posts")
+      ).json()
+      setPosts(fetchedPosts)
+      console.log(fetchedPosts)
+
       setLoading(false)
     }
-    getCurrentUser()
+    getData()
   }, [])
 
   return (
@@ -50,6 +61,7 @@ function App() {
                 <Route path="/" element={
                   <div style={{ paddingTop: "60px" }}>
                     {currentUser && <CreatePostLinkBox />}
+                    <PostsGallery posts={posts} loading={loading} />
                   </div>
                 } />
                 {/* Create a post page */}
