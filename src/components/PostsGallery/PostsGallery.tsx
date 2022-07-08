@@ -1,20 +1,11 @@
-import { CircularProgress } from "@mui/material"
-import PostsGalleryItem from "../PostsGalleryItem/PostsGalleryItem"
-
-export type PostType = {
-    content: string,
-    title: string,
-    user: {
-        username: string
-    }
-}
+import PostsGalleryItem, { PostType } from "../PostsGalleryItem/PostsGalleryItem"
+import styles from "./PostsGallery.module.scss"
 
 type Props = {
-    posts: PostType[],
-    loading: boolean
+    posts: PostType[]
 }
 
-const PostsGallery = ({ posts, loading }: Props) => {
+const PostsGallery = ({ posts }: Props) => {
 
     const postsDisplay = posts.map((postData: PostType, index) => {
         return (
@@ -23,13 +14,8 @@ const PostsGallery = ({ posts, loading }: Props) => {
     })
 
     return (
-        <div>
-            {
-                loading ?
-                    <CircularProgress />
-                    :
-                    postsDisplay
-            }
+        <div className={styles.postsGallery}>
+            {postsDisplay}
         </div>
     )
 }

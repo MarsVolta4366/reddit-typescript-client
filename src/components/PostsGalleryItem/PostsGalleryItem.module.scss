@@ -1,0 +1,8 @@
+@use "../../scss/colors" as *;
+
+.postsGalleryItem {
+    background-color: $white;
+    margin: 10px 0px 10px 0px;
+    cursor: pointer;
+    border-radius: 5px;
+}

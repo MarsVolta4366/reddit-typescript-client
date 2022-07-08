@@ -10,7 +10,8 @@ import { CurrentUserContext } from "./context/CurrentUserContext"
 import { MyThemeContext } from "./context/ThemeContext"
 import "./scss/_main.scss"
 import { UserState } from "./context/CurrentUserContext"
-import PostsGallery, { PostType } from "./components/PostsGallery/PostsGallery"
+import PostsGallery from "./components/PostsGallery/PostsGallery"
+import { PostType } from "./components/PostsGalleryItem/PostsGalleryItem"
 
 function App() {
 
@@ -59,10 +60,13 @@ function App() {
               <Routes>
                 {/* Home page */}
                 <Route path="/" element={
-                  <div style={{ paddingTop: "60px" }}>
-                    {currentUser && <CreatePostLinkBox />}
-                    <PostsGallery posts={posts} loading={loading} />
-                  </div>
+                  loading ?
+                    <h1>Loading...</h1>
+                    :
+                    <div style={{ paddingTop: "60px" }}>
+                      {currentUser && <CreatePostLinkBox />}
+                      <PostsGallery posts={posts} />
+                    </div>
                 } />
                 {/* Create a post page */}
                 <Route path="/submit" element={

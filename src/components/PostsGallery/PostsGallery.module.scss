@@ -1,0 +1,8 @@
+@use "../../scss/colors" as *;
+
+.postsGallery {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+}
