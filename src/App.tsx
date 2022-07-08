@@ -12,6 +12,7 @@ import "./scss/_main.scss"
 import { UserState } from "./context/CurrentUserContext"
 import PostsGallery from "./components/PostsGallery/PostsGallery"
 import { PostType } from "./components/PostsGalleryItem/PostsGalleryItem"
+import ShowPostPage from "./components/ShowPostPage/ShowPostPage"
 
 function App() {
 
@@ -72,6 +73,12 @@ function App() {
                 <Route path="/submit" element={
                   <div style={{ paddingTop: "60px" }}>
                     <CreatePostPage />
+                  </div>
+                } />
+                {/* Show post page */}
+                <Route path="/showPost/:postId" element={
+                  <div style={{ paddingTop: "60px" }}>
+                    <ShowPostPage />
                   </div>
                 } />
               </Routes>
