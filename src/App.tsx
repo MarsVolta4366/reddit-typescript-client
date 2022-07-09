@@ -11,80 +11,73 @@ import { MyThemeContext } from "./context/ThemeContext"
 import "./scss/_main.scss"
 import { UserState } from "./context/CurrentUserContext"
 import PostsGallery from "./components/PostsGallery/PostsGallery"
-import { PostType } from "./components/PostsGalleryItem/PostsGalleryItem"
 import ShowPostPage from "./components/ShowPostPage/ShowPostPage"
+import { MyScrollPositionContext } from "./context/ScrollPositionContext"
 
 function App() {
 
-  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light")
   const [currentUser, setCurrentUser] = useState<UserState>(null)
-  const [posts, setPosts] = useState<PostType[]>([])
+  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light")
+  const [scrollPosition, setScrollPosition] = useState(0)
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false)
   const [logInDialogOpen, setLogInDialogOpen] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loadingProfile, setLoadingProfile] = useState(true)
 
   // Get user profile if session exists
   useEffect(() => {
-    const getData = async () => {
-      setLoading(true)
+    const fetchProfile = async () => {
+      setLoadingProfile(true)
 
       // Fetch user information if currently logged in
       const userProfile = await (await fetch("http://localhost:4000/auth/profile", {
         credentials: "include"
       })).json()
       setCurrentUser(userProfile)
-      // Fetch posts for PostsGallery
-      const fetchedPosts = await (
-        await fetch("http://localhost:4000/posts")
-      ).json()
-      setPosts(fetchedPosts)
-      console.log(fetchedPosts)
 
-      setLoading(false)
+      setLoadingProfile(false)
     }
-    getData()
+    fetchProfile()
   }, [])
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <MyThemeContext.Provider value={{ theme, setTheme }}>
-        <Router>
-          <div className={`${theme}`}>
-            <div className="appBackground container">
-              <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
-              <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-              {
-                loading ?
-                  <LinearProgress /> :
-                  <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
-              }
-              <Routes>
-                {/* Home page */}
-                <Route path="/" element={
-                  loading ?
-                    <h1>Loading...</h1>
-                    :
+        <MyScrollPositionContext.Provider value={{ scrollPosition, setScrollPosition }}>
+          <Router>
+            <div className={`${theme}`}>
+              <div className="appBackground container">
+                <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
+                <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+                {
+                  loadingProfile ?
+                    <LinearProgress /> :
+                    <TopNav setSignUpDialogOpen={setSignUpDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
+                }
+                <Routes>
+                  {/* Home page */}
+                  <Route path="/" element={
                     <div style={{ paddingTop: "60px" }}>
                       {currentUser && <CreatePostLinkBox />}
-                      <PostsGallery posts={posts} />
+                      <PostsGallery />
                     </div>
-                } />
-                {/* Create a post page */}
-                <Route path="/submit" element={
-                  <div style={{ paddingTop: "60px" }}>
-                    <CreatePostPage />
-                  </div>
-                } />
-                {/* Show post page */}
-                <Route path="/showPost/:postId" element={
-                  <div style={{ paddingTop: "60px" }}>
-                    <ShowPostPage />
-                  </div>
-                } />
-              </Routes>
+                  } />
+                  {/* Create a post page */}
+                  <Route path="/submit" element={
+                    <div style={{ paddingTop: "60px" }}>
+                      <CreatePostPage />
+                    </div>
+                  } />
+                  {/* Show post page */}
+                  <Route path="/showPost/:postId" element={
+                    <div style={{ paddingTop: "60px" }}>
+                      <ShowPostPage />
+                    </div>
+                  } />
+                </Routes>
+              </div>
             </div>
-          </div>
-        </Router>
+          </Router>
+        </MyScrollPositionContext.Provider>
       </MyThemeContext.Provider>
     </CurrentUserContext.Provider>
   )

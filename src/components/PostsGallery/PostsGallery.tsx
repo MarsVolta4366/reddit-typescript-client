@@ -1,11 +1,30 @@
+import { useEffect, useState } from "react"
+import { useScrollPositionContext } from "../../context/ScrollPositionContext"
 import PostsGalleryItem, { PostType } from "../PostsGalleryItem/PostsGalleryItem"
 import styles from "./PostsGallery.module.scss"
 
-type Props = {
-    posts: PostType[]
-}
+const PostsGallery = () => {
 
-const PostsGallery = ({ posts }: Props) => {
+    const [posts, setPosts] = useState<PostType[]>([])
+    const [loadingPosts, setLoadingPosts] = useState(true)
+    const { scrollPosition } = useScrollPositionContext()
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setLoadingPosts(true)
+
+            // Fetch posts for PostsGallery
+            const fetchedPosts = await (
+                await fetch("http://localhost:4000/posts")
+            ).json()
+            setPosts(fetchedPosts)
+
+            window.scrollTo(0, scrollPosition)
+
+            setLoadingPosts(false)
+        }
+        fetchPosts()
+    }, [scrollPosition])
 
     const postsDisplay = posts.map((postData: PostType, index) => {
         return (
@@ -15,7 +34,7 @@ const PostsGallery = ({ posts }: Props) => {
 
     return (
         <div className={styles.postsGallery}>
-            {postsDisplay}
+            {loadingPosts ? <h1>Loading posts...</h1> : postsDisplay}
         </div>
     )
 }
