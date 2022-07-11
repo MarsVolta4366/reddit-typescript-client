@@ -19,6 +19,7 @@ const CreatePostPage = () => {
                 body: JSON.stringify(post)
             })
         ).json()
+
         navigate(`/showPost/${createdPost._id}`)
     }
 
