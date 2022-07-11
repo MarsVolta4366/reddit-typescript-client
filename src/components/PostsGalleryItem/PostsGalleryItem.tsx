@@ -4,6 +4,7 @@ import styles from "./PostsGalleryItem.module.scss"
 
 export type PostType = {
     _id: string,
+    // _v: number,
     content: string,
     title: string,
     user: {

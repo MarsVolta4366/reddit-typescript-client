@@ -8,10 +8,11 @@ import { PostType } from "../PostsGalleryItem/PostsGalleryItem"
 const ShowPostPage = () => {
 
     const { postId } = useParams()
-    const [postData, setPostData] = useState<PostType>()
+    const [postData, setPostData] = useState<PostType>({ _id: "", title: "", content: "", user: { username: "" } })
     const [loadingPost, setLoadingPost] = useState(true)
-    const { setPosts } = usePostsContext()
+    const { posts, setPosts } = usePostsContext()
     const { currentUser } = useCurrentUserContext()
+    const [toggleEdit, setToggleEdit] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -21,8 +22,8 @@ const ShowPostPage = () => {
                 await fetch(`http://localhost:4000/posts/showPost/${postId}`)
             ).json()
             setPostData(fetchedPost)
-            console.log(fetchedPost)
             setLoadingPost(false)
+            console.log(fetchedPost)
         }
         fetchPost()
     }, [postId])
@@ -48,12 +49,58 @@ const ShowPostPage = () => {
         navigate(-1)
     }
 
+    const handleEditSubmit = async (e: { preventDefault: () => void }) => {
+        e.preventDefault()
+
+        const editPostResponse = await (
+            await fetch(`http://localhost:4000/posts/${postId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ content: postData.content })
+            })
+        ).json()
+
+        // Update post in posts context if successfully updated in database
+        if (editPostResponse.message === "Post successfully edited") {
+            setPosts(prev => {
+                const newData = prev.data.map(post => {
+                    if (post._id === postId) {
+                        return postData
+                    } else {
+                        return post
+                    }
+                })
+
+                return { data: newData, totalPosts: posts.totalPosts }
+            })
+            setToggleEdit(false)
+        }
+
+        console.log(editPostResponse)
+    }
+
+    const editPostForm = (
+        <form onSubmit={handleEditSubmit}>
+            <input type="text" value={postData?.content} onChange={(e) => setPostData({ ...postData, content: e.target.value })} />
+            <button type="submit">Save</button>
+        </form>
+    )
+
     const postDisplay = (
         <>
             <p>{postData?.user.username}</p>
             <h1>{postData?.title}</h1>
-            <p>{postData?.content}</p>
+            {
+                toggleEdit ?
+                    editPostForm
+                    :
+                    <p>{postData?.content}</p>
+            }
 
+            {currentUser?.username === postData?.user.username && <button onClick={() => setToggleEdit(prev => !prev)}>Edit</button>}
             {currentUser?.username === postData?.user.username && <button onClick={deletePost}>Delete</button>}
             <button onClick={() => navigate(-1)}>Back</button>
         </>
