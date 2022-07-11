@@ -1,6 +1,7 @@
 import { AccountCircle, DarkMode, KeyboardArrowDown, PermIdentity, Search } from "@mui/icons-material"
 import { Menu, MenuItem, Switch } from "@mui/material"
 import React, { SetStateAction, useState } from "react"
+import { Link } from "react-router-dom"
 import { useCurrentUserContext } from "../../context/CurrentUserContext"
 import { useThemeContext } from "../../context/ThemeContext"
 import styles from "./TopNav.module.scss"
@@ -40,7 +41,9 @@ const TopNav = ({ setSignUpDialogOpen, setLogInDialogOpen }: Props) => {
 
     return (
         <nav className={`${styles.TopNavContainer} componentBackground`}>
-            <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
+            <Link to="/">
+                <img src="../../reddit-logo-light.png" alt="Reddit Logo" className={styles.redditLogoImg} />
+            </Link>
             <div className={`${styles[theme]} ${styles.searchInputContainer}`}>
                 <label htmlFor="search" className={styles.searchLabel}>
                     <Search className={styles.searchIcon} />

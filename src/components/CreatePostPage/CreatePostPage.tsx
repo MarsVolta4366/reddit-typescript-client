@@ -9,7 +9,7 @@ const CreatePostPage = () => {
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
 
-        await (
+        const createdPost = await (
             await fetch("http://localhost:4000/posts", {
                 method: "POST",
                 headers: {
@@ -19,7 +19,7 @@ const CreatePostPage = () => {
                 body: JSON.stringify(post)
             })
         ).json()
-        navigate("/")
+        navigate(`/showPost/${createdPost._id}`)
     }
 
     return (

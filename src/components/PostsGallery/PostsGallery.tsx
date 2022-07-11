@@ -1,41 +1,53 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import InfiniteScroll from "react-infinite-scroll-component"
+import { usePostsContext } from "../../context/PostsContext"
 import { useScrollPositionContext } from "../../context/ScrollPositionContext"
 import PostsGalleryItem, { PostType } from "../PostsGalleryItem/PostsGalleryItem"
 import styles from "./PostsGallery.module.scss"
 
 const PostsGallery = () => {
 
-    const [posts, setPosts] = useState<PostType[]>([])
-    const [loadingPosts, setLoadingPosts] = useState(true)
     const { scrollPosition } = useScrollPositionContext()
+    const { posts, setPosts, offset, setOffset } = usePostsContext()
 
     useEffect(() => {
         const fetchPosts = async () => {
-            setLoadingPosts(true)
 
             // Fetch posts for PostsGallery
             const fetchedPosts = await (
-                await fetch("http://localhost:4000/posts")
+                await fetch(`http://localhost:4000/posts/${offset}`)
             ).json()
-            setPosts(fetchedPosts)
+            if (offset === 0) {
+                setPosts(fetchedPosts)
+            } else {
+                setPosts(prev => {
+                    return { data: [...prev.data, ...fetchedPosts.data], totalPosts: fetchedPosts.totalPosts }
+                })
+            }
 
-            window.scrollTo(0, scrollPosition)
-
-            setLoadingPosts(false)
+            console.log(fetchedPosts)
+            // window.scrollTo(0, scrollPosition)
         }
         fetchPosts()
-    }, [scrollPosition])
+    }, [scrollPosition, setPosts, offset])
 
-    const postsDisplay = posts.map((postData: PostType, index) => {
+    const postsDisplay = posts.data.map((postData: PostType, index) => {
         return (
             <PostsGalleryItem key={`PostsGallery${index}`} postData={postData} />
         )
     })
 
     return (
-        <div className={styles.postsGallery}>
-            {loadingPosts ? <h1>Loading posts...</h1> : postsDisplay}
-        </div>
+        <InfiniteScroll
+            dataLength={posts.data.length}
+            next={() => setOffset(prev => prev += 10)}
+            hasMore={posts.totalPosts - offset > 0 && posts.totalPosts > 10}
+            loader={<h4>Loading...</h4>}
+        >
+            <div className={styles.postsGallery}>
+                {postsDisplay}
+            </div>
+        </InfiniteScroll>
     )
 }
 
