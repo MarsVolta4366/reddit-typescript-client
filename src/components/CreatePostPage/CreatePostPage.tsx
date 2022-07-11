@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { usePostsContext } from "../../context/PostsContext"
 
 const CreatePostPage = () => {
 
     const [post, setPost] = useState({ title: "", content: "" })
+    const { setPosts } = usePostsContext()
     const navigate = useNavigate()
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -19,6 +21,10 @@ const CreatePostPage = () => {
                 body: JSON.stringify(post)
             })
         ).json()
+
+        setPosts(prev => {
+            return { data: [...prev.data, createdPost], totalPosts: prev.totalPosts + 1 }
+        })
 
         navigate(`/showPost/${createdPost._id}`)
     }
