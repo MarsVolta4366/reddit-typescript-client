@@ -1,8 +1,37 @@
 @use "../../scss/colors" as *;
 
-.postsGalleryItem {
-    background-color: $white;
-    margin: 10px 0px 10px 0px;
+.postContainer {
     cursor: pointer;
-    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+    color: $dark-900;
+
+    &:hover {
+        border: 1px solid $dark-300;
+    }
+}
+
+.postUsernameText {
+    margin: 0px 0px 10px 0px;
+    font-size: 12px;
+    color: $dark-300;
+}
+
+.postUsernameLink {
+    color: $dark-300;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.postTitle {
+    margin: 0px 0px 10px 0px;
+    font-size: 18px;
+}
+
+.postContent {
+    margin: 0px;
+    font-size: 14px;
 }

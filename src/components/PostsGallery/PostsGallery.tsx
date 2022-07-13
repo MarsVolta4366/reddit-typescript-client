@@ -1,9 +1,10 @@
+import { Skeleton, Stack } from "@mui/material"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { usePostsContext } from "../../context/PostsContext"
 import { useScrollPositionContext } from "../../context/ScrollPositionContext"
 import PostsGalleryItem, { PostType } from "../PostsGalleryItem/PostsGalleryItem"
-import styles from "./PostsGallery.module.scss"
+// import styles from "./PostsGallery.module.scss"
 
 const PostsGallery = () => {
 
@@ -42,11 +43,15 @@ const PostsGallery = () => {
             dataLength={posts.data.length}
             next={() => setOffset(prev => prev += 10)}
             hasMore={posts.totalPosts - offset > 0 && posts.totalPosts > 10}
-            loader={<h4>Loading...</h4>}
+            loader={
+                <Stack spacing={1}>
+                    <Skeleton variant="text" />
+                    <Skeleton variant="circular" width={40} height={40} />
+                    <Skeleton variant="rectangular" width={620} height={118} />
+                </Stack>
+            }
         >
-            <div className={styles.postsGallery}>
-                {postsDisplay}
-            </div>
+            {postsDisplay}
         </InfiniteScroll>
     )
 }

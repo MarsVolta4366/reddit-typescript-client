@@ -60,7 +60,7 @@ function App() {
                   <Routes>
                     {/* Home page */}
                     <Route path="/" element={
-                      <div style={{ paddingTop: "60px" }}>
+                      <div className="centerContainer">
                         {currentUser && <CreatePostLinkBox />}
                         <PostsGallery />
                       </div>

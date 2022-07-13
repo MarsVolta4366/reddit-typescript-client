@@ -37,6 +37,26 @@ body {
     }
 }
 
+.centerContainer {
+    padding-top: 55px;
+    width: 620px;
+    margin: 0 auto;
+}
+
+.galleryCard {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 10px 0px 10px 0px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.light.galleryCard {
+    background-color: $white;
+    border: 1px solid $gray-500;
+}
+
 // This is for the right menu in TopNav
 .MuiList-root {
     padding: 0 !important;
