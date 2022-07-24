@@ -14,6 +14,8 @@ import PostsGallery from "./components/PostsGallery/PostsGallery"
 import ShowPostPage from "./components/ShowPostPage/ShowPostPage"
 import { MyScrollPositionContext } from "./context/ScrollPositionContext"
 import { MyPostsContext, PostsState } from "./context/PostsContext"
+import ProfilePostsGallery from "./components/ProfilePostsGallery/ProfilePostsGallery"
+import ResetPostsOnPathChange from "./components/ResetPostsOnPathChange/ResetPostsOnPathChange"
 
 function App() {
 
@@ -50,6 +52,7 @@ function App() {
             <Router>
               <div className={`${theme}`}>
                 <div className="appBackground container">
+                  <ResetPostsOnPathChange />
                   <SignUpDialog signUpDialogOpen={signUpDialogOpen} setSignUpDialogOpen={setSignUpDialogOpen} />
                   <LogInDialog logInDialogOpen={logInDialogOpen} setLogInDialogOpen={setLogInDialogOpen} />
                   {
@@ -75,6 +78,12 @@ function App() {
                     <Route path="/showPost/:postId" element={
                       <div style={{ paddingTop: "60px" }}>
                         <ShowPostPage />
+                      </div>
+                    } />
+                    {/* User profile page (display all posts by a user by username) */}
+                    <Route path="/user/:username" element={
+                      <div className="centerContainer">
+                        <ProfilePostsGallery />
                       </div>
                     } />
                   </Routes>

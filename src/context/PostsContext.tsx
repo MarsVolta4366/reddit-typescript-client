@@ -21,19 +21,3 @@ export const MyPostsContext = createContext<PostsContextInitialState>({
 })
 
 export const usePostsContext = () => useContext(MyPostsContext)
-
-
-// import { createContext, useContext } from "react"
-// import { PostType } from "../components/PostsGalleryItem/PostsGalleryItem"
-
-// type PostsInitialState = {
-//     posts: PostType[],
-//     setPosts: (newPosts: PostType[]) => void
-// }
-
-// export const MyPostsContext = createContext<PostsInitialState>({
-//     posts: [],
-//     setPosts: () => { }
-// })
-
-// export const usePostsContext = () => useContext(MyPostsContext)

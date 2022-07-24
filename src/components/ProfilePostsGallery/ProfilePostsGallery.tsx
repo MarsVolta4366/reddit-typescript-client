@@ -1,25 +1,22 @@
 import { Skeleton, Stack } from "@mui/material"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
+import { useParams } from "react-router-dom"
 import { usePostsContext } from "../../context/PostsContext"
-import { useScrollPositionContext } from "../../context/ScrollPositionContext"
 import PostsGalleryItem, { PostType } from "../PostsGalleryItem/PostsGalleryItem"
 // import styles from "./PostsGallery.module.scss"
 
-const PostsGallery = () => {
+const ProfilePostsGallery = () => {
 
-    const { scrollPosition } = useScrollPositionContext()
     const { posts, setPosts, offset, setOffset } = usePostsContext()
+    const { username } = useParams()
 
     useEffect(() => {
-
-        console.log("useEffect")
-
 
         const fetchPosts = async () => {
             // Fetch posts for PostsGallery
             const fetchedPosts = await (
-                await fetch(`http://localhost:4000/posts/${offset}`)
+                await fetch(`http://localhost:4000/posts/user/${username}/${offset}`)
             ).json()
             if (offset === 0) {
                 setPosts(fetchedPosts)
@@ -29,11 +26,10 @@ const PostsGallery = () => {
                 })
             }
             console.log(fetchedPosts)
-            // window.scrollTo(0, scrollPosition)
         }
 
         fetchPosts()
-    }, [setPosts, offset])
+    }, [setPosts, offset, username])
 
     const postsDisplay = posts.data.map((postData: PostType, index) => {
         return (
@@ -59,4 +55,4 @@ const PostsGallery = () => {
     )
 }
 
-export default PostsGallery
+export default ProfilePostsGallery
