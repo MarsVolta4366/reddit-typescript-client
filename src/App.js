@@ -12,6 +12,7 @@ import { MyScrollPositionContext } from "./context/ScrollPositionContext"
 import useFetchPosts from "./useFetchPosts"
 import { PostsContext } from "./context/PostsContext"
 import PostsGallery from "./components/PostsGallery/PostsGallery"
+import ShowPostPage from "./components/ShowPostPage/ShowPostPage"
 
 function App() {
 
@@ -83,6 +84,13 @@ function App() {
                       <div className="centerContainer">
                         {currentUser && <CreatePostLinkBox />}
                         <PostsGallery />
+                        {loading && <p>Loading...</p>}
+                      </div>
+                    } />
+                    {/* Show post page */}
+                    <Route path="/showPost/:postId" element={
+                      <div style={{ paddingTop: "60px" }}>
+                        <ShowPostPage />
                       </div>
                     } />
                   </Routes>
